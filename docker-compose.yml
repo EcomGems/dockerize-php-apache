@@ -1,26 +1,18 @@
-# Nginx Server
-web:
-  image: ecomgems/nginx
+# Apache with PHP7
+php:
+  image: ecomgems/php7-apache
+  restart: always
   ports:
     - "80:80"
-  volumes:
-    - ./src:/var/www
-    - ./src/vhost.conf:/etc/nginx/sites-enabled/vhost.conf
-  links:
-    - php
-
-# PHP-FPM First App
-php:
-  image: nmcteam/php56
-  volumes:
-    - ./src/php-fpm.conf:/etc/php5/fpm/php-fpm.conf
-    - ./src:/var/www
+  volumes_from:
+    - www
   links:
     - mysql
 
 # MySQL
 mysql:
   image: sameersbn/mysql
+  restart: always
   ports:
     - "3306:3306"
   volumes:
@@ -29,3 +21,23 @@ mysql:
     - DB_REMOTE_ROOT_NAME=root
     - DB_REMOTE_ROOT_PASS=pass
     - DB_REMOTE_ROOT_HOST=%
+
+# SFTP
+sftp:
+  image: ecomgems/sftp-server
+  restart: always
+  ports:
+    - "2222:22"
+  volumes_from:
+    - www
+  environment:
+    - USERNAME=www
+    - PASSWORD=www
+
+# Data Container with www
+www:
+  image: cogniteev/echo
+  restart: always
+  command: echo 'Data Container for WWW'
+  volumes:
+    - /var/www/public
