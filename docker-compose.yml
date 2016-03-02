@@ -37,7 +37,6 @@ sftp:
 # Data Container with www
 www:
   image: cogniteev/echo
-  restart: always
   command: echo 'Data Container for WWW'
   volumes:
     - /var/www/public
