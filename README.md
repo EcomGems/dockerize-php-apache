@@ -7,7 +7,7 @@ This example was built according to Josh Lockhart's post - [http://www.newmediac
  
 1. First of all, clone this config. 
 2. Second step is to install **Docker** and **Docker Composer**. 
-3. hen place your PHP project into *./src/public* folder. 
+3. Then place your PHP project into *./src/public* folder. 
 
 Profit. 
 
